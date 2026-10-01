@@ -51,19 +51,33 @@ class LegalEasePDF(FPDF):
 
 
 def format_pdf(text: str, doc_type: str) -> bytes:
-    pdf = LegalEasePDF(); pdf.set_auto_page_break(True, 18); pdf.add_page();
-    pdf.set_font("Times", "B", 14); pdf.multi_cell(0, 8, doc_type.upper(), align="C"); pdf.ln(4)
+    pdf = LegalEasePDF()
+    pdf.set_auto_page_break(True, 18)
+    pdf.add_page()
+
+    pdf.set_font("Times", "B", 14)
+    pdf.multi_cell(0, 8, doc_type.upper(), align="C")
+
     pdf.set_font("Times", "", 11)
+
     for raw in text.splitlines():
         line = raw.replace("## ", "").replace("**", "")
+
         if line.strip():
-            for chunk in textwrap.wrap(line, width=88, break_long_words=True, break_on_hyphens=False) or [""]:
+            for chunk in textwrap.wrap(
+                line,
+                width=88,
+                break_long_words=True,
+                break_on_hyphens=True,
+            ):
                 pdf.multi_cell(170, 6, chunk)
         else:
             pdf.ln(3)
-      pdf.ln(3)
+
+    pdf.ln(3)
 
     output = pdf.output(dest="S")
+
     if isinstance(output, str):
         return output.encode("latin-1")
 
