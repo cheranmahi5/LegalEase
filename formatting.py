@@ -65,4 +65,4 @@ def format_pdf(text: str, doc_type: str) -> bytes:
   if isinstance(output, str):
       return output.encode("latin-1")
 
-return bytes(output)
+  return bytes(output)
