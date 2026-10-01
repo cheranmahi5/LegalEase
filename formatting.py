@@ -61,8 +61,10 @@ def format_pdf(text: str, doc_type: str) -> bytes:
                 pdf.multi_cell(170, 6, chunk)
         else:
             pdf.ln(3)
-  output = pdf.output(dest="S")
-  if isinstance(output, str):
-      return output.encode("latin-1")
+      pdf.ln(3)
 
-  return bytes(output)
+    output = pdf.output(dest="S")
+    if isinstance(output, str):
+        return output.encode("latin-1")
+
+    return bytes(output)
